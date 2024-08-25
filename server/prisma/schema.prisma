@@ -12,3 +12,17 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  user_id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  role String
+  pending Pending?
+}
+model Pending{
+id String @id @default(uuid())
+status String
+user User @relation(fields: [id],references: [user_id]) 
+  }

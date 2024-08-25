@@ -2,8 +2,58 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
+import { url } from "@/components/Url/page";
+import { useRouter } from "next/navigation";
 export default function Signin() {
+  const [user, setUser] = useState({ email: "", password: "" });
+  const [isvalid, setvalid] = useState(false);
+  const { email, password } = user;
+  const router = useRouter();
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUser((x) => ({
+      ...x,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(user);
+    if (!email || !password) {
+      alert("Please fill in both email and password.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${url}/api/user/check`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (!response.ok) {
+        if (response.status === 401) {
+          setvalid(true);
+        } else {
+          throw new Error("invalid");
+        }
+        return;
+      }
+      setvalid(false);
+      const data = await response.json();
+      alert("Login successful!");
+      if (data.role === "student") {
+        alert("Hello Student");
+      } else if (data.role === "admin") {
+        alert("hello admin");
+      } else {
+        alert("hello");
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
   return (
     <div>
       <div className="min-h-screen flex items-center justify-center">
@@ -22,20 +72,35 @@ export default function Signin() {
               <p>Please Login To Your Account</p>
             </div>
             <div className="2xl:w-3/4 w-full">
-              <form action="" className="flex flex-col gap-y-2">
+              <form
+                action=""
+                className="flex flex-col gap-y-2"
+                onSubmit={handleSubmit}
+              >
                 <input
                   type="email"
                   name="email"
                   className="border-[1px] border-gray-300 p-2 text-[#4a4a4a] rounded-[5px] bg-[#F0F4F4]"
                   placeholder="Email"
+                  onChange={handleChange}
                 />
+                {isvalid && (
+                  <div className="text-left text-sm text-red-600 mx-1">
+                    <p>Invalid Email</p>
+                  </div>
+                )}
                 <input
                   type="password"
                   name="password"
                   className="border-[1px] border-gray-300 p-2 text-[#4a4a4a] rounded-[5px] bg-[#F0F4F4]"
                   placeholder="Password"
+                  onChange={handleChange}
                 />
-
+                {isvalid && (
+                  <div className="text-left text-sm text-red-600 mx-1">
+                    <p>Invalid Password</p>
+                  </div>
+                )}
                 <div className="space-x-3">
                   <button
                     type="submit"
