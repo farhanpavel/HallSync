@@ -20,7 +20,7 @@ export default function Bottom() {
             </p>
           </div>
           <div>
-            <button className="px-8 py-4 rounded-lg bg-blue-600 text-white font-semibold">
+            <button className="px-8 py-4  bg-blue-600 text-white font-semibold">
               <Link href={"/signup"} className="font-rubik">
                 Sign Up
               </Link>

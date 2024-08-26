@@ -35,7 +35,7 @@ export default function Feature() {
         </div>
 
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4 lg:w-1/2 ">
-          <div className="space-y-4  shadow-xl p-10 rounded-lg bg-blue-500 text-white">
+          <div className="space-y-4  shadow-xl p-10 bg-blue-500 text-white">
             <div className="text-lg font-sansSerif font-semibold">
               <h1>User-Friendly Dashboard</h1>
             </div>
@@ -46,7 +46,7 @@ export default function Feature() {
               </p>
             </div>
           </div>
-          <div className="space-y-4 shadow p-10 rounded-lg bg-blue-500 text-white">
+          <div className="space-y-4 shadow p-10  bg-blue-500 text-white">
             <div className="text-lg  font-sansSerif font-semibold">
               <h1>Automated Notifications</h1>
             </div>
@@ -57,7 +57,7 @@ export default function Feature() {
               </p>
             </div>
           </div>
-          <div className="space-y-4 shadow p-10 rounded-lg bg-blue-500 text-white">
+          <div className="space-y-4 shadow p-10  bg-blue-500 text-white">
             <div className="text-lg font-sansSerif font-semibold">
               <h1>Secure Payment Gateway</h1>
             </div>
@@ -68,7 +68,7 @@ export default function Feature() {
               </p>
             </div>
           </div>
-          <div className="space-y-4 shadow p-10 rounded-lg shadow-blue-300 border-none opacity-95">
+          <div className="space-y-4 shadow p-10  shadow-blue-300 border-none opacity-95">
             <div className="text-lg text-[#4a4a4a]  font-sansSerif font-semibold">
               <h1>Customizable Forms</h1>
             </div>
