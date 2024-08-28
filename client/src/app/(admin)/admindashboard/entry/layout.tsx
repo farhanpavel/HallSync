@@ -3,7 +3,7 @@
 import { Adminpanel } from "@/components/Adminpanel/page";
 import Adminsidebar from "@/components/Adminsidebar/page";
 
-export default function Landing({
+export default function Userlanding({
   children,
 }: Readonly<{
   children: React.ReactNode;
