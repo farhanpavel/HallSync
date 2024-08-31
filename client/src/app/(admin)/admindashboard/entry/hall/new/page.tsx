@@ -14,34 +14,27 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { useAppContext } from "@/components/Context/admincontext";
 
 export default function Page() {
   const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "",
+    hall_name: "",
+    capacity: "",
+    room: "",
+    bed: "",
   });
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const handleRoleChange = (role: string) => {
-    setUser({ ...user, role });
-  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(user);
     try {
-      const response = await fetch(`${url}/api/user`, {
+      const response = await fetch(`${url}/api/hall`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,71 +57,62 @@ export default function Page() {
   return (
     <Card className="border-[1px] border-gray-300">
       <CardHeader className="space-y-4">
-        <CardTitle>User Details</CardTitle>
-        <CardDescription>
-          Please select the role of the user and fill in the required
-          information.
-        </CardDescription>
+        <CardTitle>Hall Details</CardTitle>
+        <CardDescription>Enter Hall Informations</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit}>
           <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col w-1/4 space-y-3">
-              <Label htmlFor="framework" className="text-xs">
-                Select role
-              </Label>
-              <Select required onValueChange={handleRoleChange}>
-                <SelectTrigger id="framework">
-                  <SelectValue placeholder="Unassigned" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="provost">Hall Provost</SelectItem>
-                  <SelectItem value="student">Student</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
             <div className="flex flex-col space-y-6">
-              <div>
-                <h1 className="font-semibold text-sm">
-                  Enter User Informations
-                </h1>
-              </div>
-              <div className="space-y-2 ">
-                <div className="space-y-2 ">
+              <div className="space-y-2">
+                <div className="space-y-2">
                   <Label className="text-xs" htmlFor="name">
-                    Name
+                    Hall Name
                   </Label>
                   <Input
-                    id="name"
+                    id="hall_name"
                     type="name"
                     className="w-1/2"
-                    name="name"
+                    name="hall_name"
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs" htmlFor="email">
-                    Email
+                  <Label className="text-xs" htmlFor="name">
+                    Hall Capacity
                   </Label>
                   <Input
-                    id="email"
-                    type="email"
+                    id="capacity"
+                    type="number"
                     className="w-1/2"
-                    name="email"
+                    name="capacity"
                     onChange={handleChange}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs" htmlFor="password">
-                    Password
+                  <Label className="text-xs" htmlFor="name">
+                    Number of Rooms
                   </Label>
                   <Input
-                    type="password"
-                    id="password"
+                    id="room"
+                    type="number"
                     className="w-1/2"
-                    name="password"
+                    name="room"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs" htmlFor="name">
+                    Number of Beds Per Room
+                  </Label>
+                  <Input
+                    id="bed"
+                    type="number"
+                    className="w-1/2"
+                    name="bed"
                     onChange={handleChange}
                     required
                   />

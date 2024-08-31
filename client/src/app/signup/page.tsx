@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { url } from "@/components/Url/page";
 export default function Signup() {
   const [user, setUser] = useState({
-    id: 3,
     name: "",
     email: "",
     password: "",

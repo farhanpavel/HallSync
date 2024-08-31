@@ -19,10 +19,19 @@ model User{
   email String @unique
   password String
   role String
-  pending Pending?
+  provost Provost?
 }
-model Pending{
-id String @id @default(uuid())
-status String
-user User @relation(fields: [id],references: [user_id]) 
-  }
+model Hall{
+  hall_id String @id @default(uuid())
+  hall_name String 
+  capacity String
+  room String
+  bed String
+
+}
+model Provost{
+  provost_id String @id
+  active String
+  hall_id String
+  user User @relation(fields: [provost_id],references: [user_id],onDelete: Cascade) 
+}

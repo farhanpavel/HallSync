@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { url } from "@/components/Url/page";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -24,12 +24,14 @@ import {
 import { useAppContext } from "@/components/Context/admincontext";
 
 export default function Page() {
+  const { userData } = useAppContext();
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
     role: "",
   });
+  const { name, email, password, role } = user;
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,8 +43,8 @@ export default function Page() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${url}/api/user`, {
-        method: "POST",
+      const response = await fetch(`${url}/api/user/${userData.id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -61,6 +63,28 @@ export default function Page() {
       console.log("error", err);
     }
   };
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const response = await fetch(`${url}/api/user/${userData.id}`);
+        if (response.ok) {
+          const json = await response.json();
+          setUser((prevUser) => ({
+            ...prevUser,
+            name: json.name,
+            email: json.email,
+            role: json.role,
+          }));
+        } else {
+          console.error("Failed to fetch student data");
+        }
+      } catch (error) {
+        console.error("Error fetching student data:", error);
+      }
+    };
+
+    fetchStudent();
+  }, []);
   return (
     <Card className="border-[1px] border-gray-300">
       <CardHeader className="space-y-4">
@@ -74,10 +98,15 @@ export default function Page() {
         <form onSubmit={handleSubmit}>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col w-1/4 space-y-3">
-              <Label htmlFor="framework" className="text-xs">
+              <Label className="text-xs" htmlFor="framework">
                 Select role
               </Label>
-              <Select required onValueChange={handleRoleChange}>
+              <Select
+                required
+                onValueChange={handleRoleChange}
+                disabled
+                value={role}
+              >
                 <SelectTrigger id="framework">
                   <SelectValue placeholder="Unassigned" />
                 </SelectTrigger>
@@ -93,8 +122,8 @@ export default function Page() {
                   Enter User Informations
                 </h1>
               </div>
-              <div className="space-y-2 ">
-                <div className="space-y-2 ">
+              <div className="space-y-2">
+                <div className="space-y-2">
                   <Label className="text-xs" htmlFor="name">
                     Name
                   </Label>
@@ -104,6 +133,7 @@ export default function Page() {
                     className="w-1/2"
                     name="name"
                     onChange={handleChange}
+                    value={name}
                     required
                   />
                 </div>
@@ -117,19 +147,7 @@ export default function Page() {
                     className="w-1/2"
                     name="email"
                     onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-xs" htmlFor="password">
-                    Password
-                  </Label>
-                  <Input
-                    type="password"
-                    id="password"
-                    className="w-1/2"
-                    name="password"
-                    onChange={handleChange}
+                    value={email}
                     required
                   />
                 </div>

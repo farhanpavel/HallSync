@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -6,22 +8,19 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "@/components/ui/dropdown-menu";
-import {
-  ColumnDef,
-  SortingState,
-  flexRender,
-  useReactTable,
-  getCoreRowModel,
-  getSortedRowModel, // Import getSortedRowModel
-} from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { useAppContext } from "@/components/Context/admincontext";
+import { DeleteDialog } from "@/components/Delete/page";
+import { url } from "@/components/Url/page";
+import { ColumnDef } from "@tanstack/react-table";
+import { ActionsCell } from "./data";
+
 export type User = {
   user_id: string;
   name: string;
   email: string;
   role: string;
 };
-
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "name",
@@ -65,28 +64,6 @@ export const columns: ColumnDef<User>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const user = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="p-2 hover:bg-blue-200 outline-none rounded-full hover:transition-all hover:delay-100">
-              <MoreHorizontal className="h-4 w-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:bg-blue-200  rounded-lg hover:transition-all hover:delay-100">
-              Update
-            </DropdownMenuItem>
-            <DropdownMenuItem className="hover:bg-blue-200 rounded-lg  hover:transition-all hover:delay-100">
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <ActionsCell user={row.original} />,
   },
 ];

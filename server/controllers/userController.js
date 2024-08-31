@@ -1,7 +1,15 @@
 import prisma from "../db.js";
 import bcrypt from "bcrypt";
 export const userGet = async (req, res) => {
-  const Data = await prisma.user.findMany();
+  const Data = await prisma.user.findMany({});
+  res.status(200).json(Data);
+};
+export const userGetById = async (req, res) => {
+  const Data = await prisma.user.findUnique({
+    where: {
+      user_id: req.params.id,
+    },
+  });
   res.status(200).json(Data);
 };
 export const userPost = async (req, res) => {
@@ -9,24 +17,35 @@ export const userPost = async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const Data = await prisma.user.create({
-      data: {
-        email,
-        role,
-        name,
-        password: hashedPassword,
-        pending: {
-          create: {
-            status: "pending",
+    if (role === "student") {
+      const Data = await prisma.user.create({
+        data: {
+          email,
+          role,
+          name,
+          password: hashedPassword,
+        },
+      });
+
+      res.status(200).json(Data);
+    } else {
+      const Data = await prisma.user.create({
+        data: {
+          email,
+          role,
+          name,
+          password: hashedPassword,
+          provost: {
+            create: {
+              active: "0",
+              hall_id: "",
+            },
           },
         },
-      },
-      include: {
-        pending: true,
-      },
-    });
+      });
 
-    res.status(200).json(Data);
+      res.status(200).json(Data);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create user" });
@@ -54,7 +73,20 @@ export const userCheckPost = async (req, res) => {
 export const userDelete = async (req, res) => {
   const Data = await prisma.user.delete({
     where: {
-      id: req.params.id,
+      user_id: req.params.id,
+    },
+  });
+  res.status(200).json(Data);
+};
+export const userPut = async (req, res) => {
+  const { name, email } = req.body;
+  const Data = await prisma.user.update({
+    where: {
+      user_id: req.params.id,
+    },
+    data: {
+      name,
+      email,
     },
   });
   res.status(200).json(Data);
