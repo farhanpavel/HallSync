@@ -35,3 +35,9 @@ model Provost{
   hall_id String
   user User @relation(fields: [provost_id],references: [user_id],onDelete: Cascade) 
 }
+model Notice{
+  notice_id String @id @default(uuid())
+  role String 
+  title String
+  description String
+}

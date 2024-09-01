@@ -25,7 +25,12 @@ interface HallData {
   room: string;
   bed: string;
 }
-
+interface NoticeData {
+  notice_id: string;
+  role: string;
+  title: string;
+  description: string;
+}
 interface AppContextType {
   userData: UserData;
   setUserData: Dispatch<SetStateAction<UserData>>;
@@ -33,6 +38,8 @@ interface AppContextType {
   setFetchData: Dispatch<SetStateAction<FetchData[]>>;
   hallData: HallData[];
   setHallData: Dispatch<SetStateAction<HallData[]>>;
+  noticeData: NoticeData[];
+  setNoticeData: Dispatch<SetStateAction<NoticeData[]>>;
 }
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -40,6 +47,7 @@ export function AdminWrapper({ children }: { children: React.ReactNode }) {
   const [userData, setUserData] = useState<UserData>({ id: "" });
   const [fetchData, setFetchData] = useState<FetchData[]>([]);
   const [hallData, setHallData] = useState<HallData[]>([]);
+  const [noticeData, setNoticeData] = useState<NoticeData[]>([]);
 
   return (
     <AppContext.Provider
@@ -50,6 +58,8 @@ export function AdminWrapper({ children }: { children: React.ReactNode }) {
         setFetchData,
         hallData,
         setHallData,
+        setNoticeData,
+        noticeData,
       }}
     >
       {children}

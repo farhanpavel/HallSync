@@ -74,7 +74,7 @@ export default function Page() {
         </div>
       </div>
       <div className="rounded-md border">
-        <Table className="w-full  ">
+        <Table className="w-full ">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

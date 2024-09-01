@@ -24,13 +24,33 @@ export const hallPost = async (req, res) => {
   }
 };
 export const hallDelete = async (req, res) => {
-  const Data = await prisma.hall.delete({
-    where: {
-      hall_id: req.params.id,
-    },
-  });
-  res.status(200).json(Data);
+  try {
+    // First, update all provosts associated with the hall
+    await prisma.provost.updateMany({
+      where: {
+        hall_id: req.params.id,
+      },
+      data: {
+        active: "0",
+        hall_id: "", // Or set to null if `hall_id` can be null
+      },
+    });
+
+    // Then, delete the hall
+    const Data = await prisma.hall.delete({
+      where: {
+        hall_id: req.params.id,
+      },
+    });
+
+    res.status(200).json(Data);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error deleting the hall and updating provosts" });
+  }
 };
+
 export const hallPut = async (req, res) => {
   const { hall_name, bed, room, capacity } = req.body;
   const Data = await prisma.hall.update({

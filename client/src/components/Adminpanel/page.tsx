@@ -34,10 +34,7 @@ export function Adminpanel() {
           <Link
             href="/admindashboard/entry"
             className={`text-[#4a4a4a] transition-colors hover:text-blue-600 hover:transition-all hover:delay-200 ${
-              pathname === "/admindashboard/entry" ||
-              pathname === "/admindashboard/entry/users" ||
-              pathname === "/admindashboard/entry/hall" ||
-              pathname === "/admindashboard/entry/notice"
+              pathname.startsWith("/admindashboard/entry")
                 ? "border-b-2 border-blue-600"
                 : ""
             }`}
