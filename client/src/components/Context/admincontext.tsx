@@ -31,6 +31,13 @@ interface NoticeData {
   title: string;
   description: string;
 }
+interface StudentData {
+  student_id: string;
+  name: string;
+  registration_num: string;
+  department: string;
+  active: number;
+}
 interface AppContextType {
   userData: UserData;
   setUserData: Dispatch<SetStateAction<UserData>>;
@@ -40,6 +47,8 @@ interface AppContextType {
   setHallData: Dispatch<SetStateAction<HallData[]>>;
   noticeData: NoticeData[];
   setNoticeData: Dispatch<SetStateAction<NoticeData[]>>;
+  studentData: StudentData[];
+  setStudentData: Dispatch<SetStateAction<StudentData[]>>;
 }
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -48,7 +57,7 @@ export function AdminWrapper({ children }: { children: React.ReactNode }) {
   const [fetchData, setFetchData] = useState<FetchData[]>([]);
   const [hallData, setHallData] = useState<HallData[]>([]);
   const [noticeData, setNoticeData] = useState<NoticeData[]>([]);
-
+  const [studentData, setStudentData] = useState<StudentData[]>([]);
   return (
     <AppContext.Provider
       value={{
@@ -60,6 +69,8 @@ export function AdminWrapper({ children }: { children: React.ReactNode }) {
         setHallData,
         setNoticeData,
         noticeData,
+        studentData,
+        setStudentData,
       }}
     >
       {children}

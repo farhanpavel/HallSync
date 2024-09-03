@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { url } from "@/components/Url/page";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 export default function Signin() {
   const [user, setUser] = useState({ email: "", password: "" });
   const [isvalid, setvalid] = useState(false);
@@ -43,11 +44,15 @@ export default function Signin() {
       const data = await response.json();
       alert("Login successful!");
       if (data.role === "student") {
-        alert("Hello Student");
+        Cookies.set("id", data.id);
+        router.push("/studentdashboard/overview");
       } else if (data.role === "admin") {
-        alert("hello admin");
+        Cookies.set("id", data.id);
+        router.push("/admindashboard/overview");
       } else {
-        alert("hello");
+        Cookies.set("id", data.id);
+        Cookies.set("hallId", data.hall_id);
+        router.push("/provostdashboard/overview");
       }
     } catch (err) {
       console.log("error", err);

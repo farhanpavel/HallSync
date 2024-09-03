@@ -7,17 +7,17 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
-export function Adminpanel() {
-  const pathname = usePathname();
+export function Provostpanel() {
   const handleCookies = () => {
     Cookies.remove("id");
     Cookies.remove("hallId");
   };
+  const pathname = usePathname();
   return (
     <div className="flex  w-full flex-col ">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b border-gray-300  px-4 md:px-6">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-6 md:text-sm lg:gap-10">
-          <Link href={"/admindashboard/overview"}>
+          <Link href={"/provostdashboard/overview"}>
             <Image
               src={"/images/logo2.png"}
               width={120}
@@ -26,9 +26,9 @@ export function Adminpanel() {
             />
           </Link>
           <Link
-            href="/admindashboard/overview"
+            href="/provostdashboard/overview"
             className={`text-[#4a4a4a] transition-colors hover:text-blue-600 hover:transition-all hover:delay-200 ${
-              pathname === "/admindashboard/overview"
+              pathname === "/provostdashboard/overview"
                 ? "border-b-2 border-blue-600 "
                 : ""
             }`}
@@ -36,9 +36,9 @@ export function Adminpanel() {
             Overview
           </Link>
           <Link
-            href="/admindashboard/entry"
+            href="/provostdashboard/entry"
             className={`text-[#4a4a4a] transition-colors hover:text-blue-600 hover:transition-all hover:delay-200 ${
-              pathname.startsWith("/admindashboard/entry")
+              pathname.startsWith("/provostdashboard/entry")
                 ? "border-b-2 border-blue-600"
                 : ""
             }`}
@@ -59,7 +59,7 @@ export function Adminpanel() {
           </SheetTrigger>
           <SheetContent side="left" className="bg-[#F0F4F4]">
             <nav className="flex flex-col items-center gap-6 text-lg font-medium ">
-              <Link href={"/admindashboard/overview"}>
+              <Link href={"/provostdashboard/overview"}>
                 <Image
                   src={"/images/logo2.png"}
                   width={220}
@@ -69,9 +69,9 @@ export function Adminpanel() {
               </Link>
 
               <Link
-                href="/admindashboard/overview"
+                href="/provostdashboard/overview"
                 className={`text-[#4a4a4a] transition-colors hover:text-blue-600 hover:transition-all hover:delay-200 ${
-                  pathname === "/admindashboard/overview"
+                  pathname === "/provostdashboard/overview"
                     ? "border-b-2 border-blue-600 "
                     : ""
                 }`}
@@ -79,9 +79,9 @@ export function Adminpanel() {
                 Overview
               </Link>
               <Link
-                href="/admindashboard/entry"
+                href="/provostdashboard/entry"
                 className={`text-[#4a4a4a] transition-colors hover:text-blue-600 hover:transition-all hover:delay-200 ${
-                  pathname === "/admindashboard/entry"
+                  pathname === "/provostdashboard/entry"
                     ? "border-b-2 border-blue-600 "
                     : ""
                 }`}

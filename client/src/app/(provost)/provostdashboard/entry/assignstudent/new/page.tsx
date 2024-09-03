@@ -24,25 +24,25 @@ import Link from "next/link";
 import { User, columns } from "./_datatable/action";
 import { useAppContext } from "@/components/Context/admincontext";
 import { Input } from "@/components/ui/input";
-import Cookies from "js-cookie";
+
 export default function Page() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const { userData, setUserData, hallData, setHallData } = useAppContext();
-
+  const { userData, setUserData, setStudentData, studentData } =
+    useAppContext();
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${url}/api/hall`);
+      const response = await fetch(`${url}/api/form`);
       const json = await response.json();
       if (response.ok) {
-        setHallData(json);
+        setStudentData(json);
       }
     };
     fetchData();
   }, []);
 
   const table = useReactTable({
-    data: hallData,
+    data: studentData,
     columns,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
@@ -57,25 +57,17 @@ export default function Page() {
       <div className="flex justify-between">
         <div>
           <Input
-            placeholder="Search by Hall Name"
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            placeholder="Search by name"
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
+              table.getColumn("name")?.setFilterValue(event.target.value)
             }
             className="max-w-[20rem] text-xs"
           />
         </div>
-        <div className="flex items-center">
-          <Link
-            className="bg-blue-600 hover:transition-all hover:delay-200 hover:bg-blue-500 py-2 px-4 rounded-[5px] text-white text-xs "
-            href="/admindashboard/entry/hall/new"
-          >
-            Create Hall
-          </Link>
-        </div>
       </div>
       <div className="rounded-md border">
-        <Table className="w-full  ">
+        <Table className="w-full ">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
