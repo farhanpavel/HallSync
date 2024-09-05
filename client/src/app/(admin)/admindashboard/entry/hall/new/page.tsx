@@ -23,6 +23,7 @@ export default function Page() {
     capacity: "",
     room: "",
     bed: "",
+    floor: "",
   });
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
@@ -93,7 +94,20 @@ export default function Page() {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs" htmlFor="name">
-                    Number of Rooms
+                    Number of Floors
+                  </Label>
+                  <Input
+                    id="floor"
+                    type="number"
+                    className="w-1/2"
+                    name="floor"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs" htmlFor="name">
+                    Number of Rooms Per Floor
                   </Label>
                   <Input
                     id="room"

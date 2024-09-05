@@ -12,6 +12,14 @@ export const userGetById = async (req, res) => {
   });
   res.status(200).json(Data);
 };
+export const userGetByName = async (req, res) => {
+  const Data = await prisma.user.findMany({
+    where: {
+      role: req.params.role,
+    },
+  });
+  res.status(200).json(Data);
+};
 export const userPost = async (req, res) => {
   const { email, password, name, role } = req.body;
 
@@ -59,9 +67,16 @@ export const userCheckPost = async (req, res) => {
       where: {
         email: email,
       },
+      include: {
+        provost: true,
+      },
     });
     if (Data && (await bcrypt.compare(password, Data.password))) {
-      res.status(200).json({ role: Data.role });
+      res.status(200).json({
+        role: Data.role,
+        id: Data.user_id,
+        hall_id: Data.provost ? Data.provost.hall_id : null,
+      });
     } else {
       res.status(401).json("invalid Data");
     }

@@ -6,7 +6,7 @@ export default function EntryPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/provostdashboard/entry");
+    router.replace("/provostdashboard/entry/assignstudent");
   }, [router]);
 
   return null; // No need to render anything since we're redirecting

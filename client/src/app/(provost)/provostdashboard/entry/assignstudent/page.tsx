@@ -34,7 +34,7 @@ export default function Page() {
     useAppContext();
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${url}/api/form/studentdata/${hallId}`);
+      const response = await fetch(`${url}/api/form/formdata/${hallId}`);
       const json = await response.json();
       if (response.ok) {
         setStudentData(json);

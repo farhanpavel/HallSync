@@ -24,7 +24,20 @@ export type User = {
 export const ActionsCell: React.FC<{ user: User }> = ({ user }) => {
   const hallId = Cookies.get("hallId");
   const router = useRouter();
-  const { setStudentData } = useAppContext();
+  const { setStudentData, studentData } = useAppContext();
+
+  const updateStudentStatus = (
+    studentId: string,
+    active: number,
+    hallId: string
+  ) => {
+    const updatedData = studentData.map((student) =>
+      student.student_id === studentId
+        ? { ...student, active, hall_id: hallId }
+        : student
+    );
+    setStudentData(updatedData);
+  };
 
   const handleAssign = async (studentId: string) => {
     try {
@@ -43,6 +56,7 @@ export const ActionsCell: React.FC<{ user: User }> = ({ user }) => {
         throw new Error("Failed to submit data");
       } else {
         alert("Successful");
+        updateStudentStatus(studentId, 2, hallId || "");
       }
     } catch (err) {
       console.log("error", err);
@@ -66,6 +80,7 @@ export const ActionsCell: React.FC<{ user: User }> = ({ user }) => {
         throw new Error("Failed to submit data");
       } else {
         alert("Successful");
+        updateStudentStatus(studentId, 0, "");
       }
     } catch (err) {
       console.log("error", err);

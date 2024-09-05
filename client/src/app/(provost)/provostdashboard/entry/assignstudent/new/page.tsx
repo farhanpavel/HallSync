@@ -24,15 +24,17 @@ import Link from "next/link";
 import { User, columns } from "./_datatable/action";
 import { useAppContext } from "@/components/Context/admincontext";
 import { Input } from "@/components/ui/input";
-
+import Cookies from "js-cookie";
 export default function Page() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [users, setUsers] = useState<User[]>([]);
+
   const { userData, setUserData, setStudentData, studentData } =
     useAppContext();
+  const hallId = Cookies.get("hallId");
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${url}/api/form`);
+      const response = await fetch(`${url}/api/form/formdata/${hallId}`);
       const json = await response.json();
       if (response.ok) {
         setStudentData(json);

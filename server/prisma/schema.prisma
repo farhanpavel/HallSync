@@ -20,11 +20,13 @@ model User{
   password String
   role String
   provost Provost?
+ 
 }
 model Hall{
   hall_id String @id @default(uuid())
   hall_name String 
   capacity String
+  floor String
   room String
   bed String
 
@@ -41,3 +43,24 @@ model Notice{
   title String
   description String
 }
+
+model Form {
+  name             String
+  form_id           String   @id @default(uuid())
+  registration_num  String
+  student_id        String @unique
+  department        String
+  enroll_year       DateTime
+  expected_grad     DateTime
+  hall_id           String 
+  imageUrl          String? 
+  active            Int @default(0) 
+  hall_active Int @default(0) 
+}
+model Room {
+  student_id String @id
+  hall_id String 
+  floor String
+  room String
+}
+
