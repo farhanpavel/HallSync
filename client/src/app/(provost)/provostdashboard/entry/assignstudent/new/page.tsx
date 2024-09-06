@@ -34,7 +34,9 @@ export default function Page() {
   const hallId = Cookies.get("hallId");
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${url}/api/form/formdata/${hallId}`);
+      const active = 1;
+      const response = await fetch(`${url}/api/form/activedata/data/${active}`);
+
       const json = await response.json();
       if (response.ok) {
         setStudentData(json);

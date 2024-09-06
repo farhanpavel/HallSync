@@ -9,6 +9,37 @@ export const roomGet = async (req, res) => {
   });
   res.status(200).json(Data.length);
 };
+export const roomGetByStudentId = async (req, res) => {
+  try {
+    const roomData = await prisma.room.findFirst({
+      where: {
+        student_id: req.params.id,
+      },
+    });
+
+    if (!roomData) {
+      return res.status(404).json({ error: "Room not found" });
+    }
+
+    const hallData = await prisma.hall.findFirst({
+      where: {
+        hall_id: roomData.hall_id,
+      },
+    });
+
+    const combinedData = {
+      ...roomData,
+      hall: hallData,
+    };
+
+    res.status(200).json(combinedData);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching room and hall data." });
+  }
+};
+
 export const roomGetById = async (req, res) => {
   try {
     // Fetch all room data based on hall_id and room number

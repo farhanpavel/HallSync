@@ -71,7 +71,7 @@ export const ActionsCell: React.FC<{ user: User }> = ({ user }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          active: 0,
+          active: 1,
           hall_id: "",
         }),
       });

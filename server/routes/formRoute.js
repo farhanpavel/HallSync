@@ -3,6 +3,7 @@ import {
   createForm,
   formDelete,
   formGet,
+  formGetByActive,
   formGetById,
   formGetByIdAnother,
   formGetByIdAnotherTwo,
@@ -15,6 +16,7 @@ formRouter.post("/", createForm);
 formRouter.get("/", formGet);
 formRouter.get("/studentdata/:hallid/:active", formGetByIdAnother);
 formRouter.get("/formdata/:hallid", formGetByIdAnotherTwo);
+formRouter.get("/activedata/data/:active", formGetByActive);
 formRouter.get("/:id", formGetById);
 formRouter.put("/:id", formPut);
 formRouter.delete("/:id", formDelete);

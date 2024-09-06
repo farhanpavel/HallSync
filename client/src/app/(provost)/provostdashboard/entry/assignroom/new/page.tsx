@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 interface Student {
   student_id: string;
@@ -53,6 +54,7 @@ export default function Page() {
   const hallId = Cookies.get("hallId");
   const [selectedStudent, setSelectedStudent] = useState("");
   const active = 0;
+  const router = useRouter();
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${url}/api/hall/${hallId}`);
@@ -85,7 +87,7 @@ export default function Page() {
     if (selectedFloor) {
       const floorPrefix = `${selectedFloor.padStart(2, "0")}`;
       const roomList = Array.from(
-        { length: parseInt(hallData?.bed ?? "0", 10) },
+        { length: parseInt(hallData?.room ?? "0", 10) },
         (_, i) => `${floorPrefix}${i + 1}`
       );
       setRooms(roomList);
@@ -125,8 +127,9 @@ export default function Page() {
         alert("Server Error");
         throw new Error("Failed to submit data");
       } else {
-        alert("Success");
-        setLoading(false);
+        setTimeout(() => {
+          router.back();
+        }, 3000);
       }
     } catch (err) {
       console.log("error", err);

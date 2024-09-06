@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
+
 export function Adminpanel() {
   const pathname = usePathname();
   const handleCookies = () => {

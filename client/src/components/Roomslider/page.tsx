@@ -5,6 +5,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Input } from "../ui/input";
 import Cookies from "js-cookie";
@@ -36,8 +38,9 @@ export function Slider() {
   const [roomNumber, setRoomNumber] = useState<string>("");
   const [isRoomEnabled, setIsRoomEnabled] = useState<boolean>(false);
   const hallId = Cookies.get("hallId");
-
+  const [roomName, setRoom] = useState("");
   const handleFetchRoomData = async (room: string) => {
+    setRoom(room);
     try {
       const response = await fetch(`${url}/api/room/${hallId}/${room}`);
       const json = await response.json();
@@ -52,7 +55,7 @@ export function Slider() {
         } else {
           // Room number does not start with "0"
           if (json.length === 0) {
-            alert("No students assigned to this room.");
+            alert("Wrong Room Number");
           } else {
             setRoomData(json);
           }
@@ -86,7 +89,7 @@ export function Slider() {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+    <div className="w-full max-w-4xl mx-auto p-6 rounded-lg">
       {/* Search Input */}
       <div className="flex flex-col sm:flex-row justify-between mb-5 gap-4">
         <div className="flex items-center gap-2">
@@ -109,14 +112,14 @@ export function Slider() {
           />
           <button
             onClick={handleSearch}
-            className={`ml-2 px-4 py-2 rounded-lg text-xs text-white font-semibold shadow-md transition-transform duration-200 ${
+            className={`ml-2 px-4 py-2 rounded-sm text-xs text-white  shadow-md transition-transform duration-200 ${
               isRoomEnabled && roomNumber.trim()
-                ? "bg-blue-600 hover:bg-blue-700"
+                ? "bg-red-600 hover:bg-red-700"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
             disabled={!isRoomEnabled || !roomNumber.trim()}
           >
-            Go
+            GO
           </button>
         </div>
         <div className="flex items-center">
@@ -124,7 +127,7 @@ export function Slider() {
             onClick={() =>
               router.push("/provostdashboard/entry/assignroom/new")
             }
-            className="bg-green-500 text-xs text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-green-600 transition-colors duration-200"
+            className="bg-green-500 text-xs text-white px-4 py-2 rounded-sm  shadow-md hover:bg-green-600 transition-colors duration-200"
           >
             Assign Room
           </button>
@@ -133,14 +136,14 @@ export function Slider() {
 
       {/* Carousel */}
       {roomData.length > 0 && (
-        <Carousel className="overflow-scroll cursor-grab">
+        <Carousel className="w-full ">
           <CarouselContent>
             {roomData.map((data, index) => (
               <CarouselItem key={index} className="transform block p-4">
                 <Card className="bg-white shadow-lg rounded-lg">
                   <CardContent className="p-6">
                     <h1 className="text-center text-2xl font-semibold mb-4">
-                      Room {roomNumber}
+                      Room {roomName}
                     </h1>
                     <div className="flex flex-wrap gap-6 justify-center">
                       <div className="bg-gray-50 p-4 rounded-lg shadow-md w-full max-w-sm">
@@ -188,6 +191,8 @@ export function Slider() {
               </CarouselItem>
             ))}
           </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
         </Carousel>
       )}
     </div>

@@ -94,6 +94,21 @@ export const formDelete = async (req, res) => {
       student_id: req.params.id,
     },
   });
+  if (data.hall_active === 1) {
+    await prisma.room.delete({
+      where: {
+        student_id: req.params.id,
+      },
+    });
+  }
+  res.status(200).json(data);
+};
+export const formGetByActive = async (req, res) => {
+  const data = await prisma.form.findMany({
+    where: {
+      active: parseInt(req.params.active),
+    },
+  });
   res.status(200).json(data);
 };
 export const formPut = async (req, res) => {

@@ -16,53 +16,45 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ActionsCell } from "./data";
 
 export type User = {
-  student_id: string;
-  name: string;
-  registration_num: string;
-  department: string;
-  active: number;
+  notice_id: string;
+  role: string;
+  title: string;
+  description: string;
 };
-
 export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "title",
     header: ({ column }) => (
       <button
         className="hover:bg-blue-200 flex items-center px-4 py-2 rounded-full hover:transition-all hover:delay-100"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Name
+        Title
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </button>
     ),
     enableSorting: true,
   },
   {
-    accessorKey: "department",
+    accessorKey: "description",
     header: ({ column }) => (
       <button
         className="hover:bg-blue-200 flex items-center px-4 py-2 rounded-full hover:transition-all hover:delay-100"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Department
+        Description
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </button>
     ),
+    cell: ({ getValue }) => {
+      const description = getValue<string>();
+      return description.length > 20
+        ? `${description.substring(0, 200)}...`
+        : description;
+    },
     enableSorting: true,
   },
-  {
-    accessorKey: "registration_num",
-    header: ({ column }) => (
-      <button
-        className="hover:bg-blue-200 flex items-center px-4 py-2 rounded-full hover:transition-all hover:delay-100"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Registration Number
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </button>
-    ),
-    enableSorting: true,
-  },
+
   {
     id: "actions",
     enableHiding: false,
