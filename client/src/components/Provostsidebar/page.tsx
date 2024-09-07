@@ -43,14 +43,14 @@ export default function Provostsidebar() {
               Notice
             </Link>
             <Link
-              href="/provostdashboard/entry/hallfee"
+              href="/provostdashboard/entry/leaving"
               className={`text-primary p-2 rounded-[5px] hover:transition-all hover:delay-200 ${
-                pathname.startsWith("/provostdashboard/entry/hallfee")
+                pathname.startsWith("/provostdashboard/entry/leaving")
                   ? "bg-blue-200 text-[#4a4a4a] font-medium"
                   : "hover:bg-gray-200"
               }`}
             >
-              Hall Fee
+              Withdrawal Status
             </Link>
           </nav>
         </div>

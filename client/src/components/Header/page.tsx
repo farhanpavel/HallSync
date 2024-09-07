@@ -70,9 +70,10 @@ export default function Header() {
             <NavigationMenuLink asChild>
               <Link
                 href="#benefits"
-                className="group inline-flex h-9 w-max items-center justify-center  hover:rounded-[9px]  
-                 px-4 py-2 text-lg 2xl:text-2xl  font-semibold transition-all 
-                 text-blue-600 hover:shadow-md hover:shadow-blue-600 hover:delay-300 hover:duration-200 hover:py-1"
+                className="group inline-flex h-9 w-max items-center justify-center   
+             px-4 py-2 text-lg 2xl:text-2xl font-semibold transition-all 
+             text-blue-600 hover:shadow-[0_4px_2px_-2px_rgba(0,0,255,0.6)] 
+             duration-300"
                 prefetch={false}
               >
                 Benefits
@@ -81,9 +82,10 @@ export default function Header() {
             <NavigationMenuLink asChild>
               <Link
                 href="#feature"
-                className="group inline-flex h-9 w-max items-center justify-center hover:rounded-[9px] 
-                px-4 py-2 text-lg 2xl:text-2xl  font-semibold  transition-all 
-                text-blue-600 hover:shadow-md hover:shadow-blue-600 hover:delay-300 hover:duration-200 hover:py-1"
+                className="group inline-flex h-9 w-max items-center justify-center   
+             px-4 py-2 text-lg 2xl:text-2xl font-semibold transition-all 
+             text-blue-600 hover:shadow-[0_4px_2px_-2px_rgba(0,0,255,0.6)] 
+             duration-300"
                 prefetch={false}
               >
                 Feature
@@ -92,9 +94,10 @@ export default function Header() {
             <NavigationMenuLink asChild>
               <Link
                 href="#works"
-                className="group inline-flex h-9 w-max items-center justify-center  hover:rounded-[9px] 
-                 px-4 py-2 text-lg 2xl:text-2xl  font-semibold  transition-all 
-                 text-blue-600 hover:shadow-md hover:shadow-blue-600  hover:delay-300 hover:duration-200 hover:py-1"
+                className="group inline-flex h-9 w-max items-center justify-center   
+             px-4 py-2 text-lg 2xl:text-2xl font-semibold transition-all 
+             text-blue-600 hover:shadow-[0_4px_2px_-2px_rgba(0,0,255,0.6)] 
+             duration-300"
                 prefetch={false}
               >
                 How it Works

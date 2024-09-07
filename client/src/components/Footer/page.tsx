@@ -14,11 +14,21 @@ export default function Footer() {
       </div>
       <div className="mt-6 sm:flex sm:flex-wrap sm:justify-center sm:flex-row">
         <ul className="sm:flex text-center gap-x-6 text-[#4a4a4a] font-rubik">
-          <li>Contact</li>
-          <li>FAQ</li>
-          <li>Support</li>
-          <li>Terms & Condition</li>
-          <li>Privacy Policy</li>
+          <li className="hover:text-blue-600 cursor-pointer hover:transition-colors hover:delay-150">
+            Contact
+          </li>
+          <li className="hover:text-blue-600 cursor-pointer hover:transition-colors hover:delay-150">
+            FAQ
+          </li>
+          <li className="hover:text-blue-600 cursor-pointer hover:transition-colors hover:delay-150">
+            Support
+          </li>
+          <li className="hover:text-blue-600 cursor-pointer hover:transition-colors hover:delay-150">
+            Terms & Condition
+          </li>
+          <li className="hover:text-blue-600 cursor-pointer hover:transition-colors hover:delay-150">
+            Privacy Policy
+          </li>
         </ul>
       </div>
       <div className="p-7 mt-5 ">
@@ -29,9 +39,15 @@ export default function Footer() {
             </div>
             <div>
               <ul className="sm:flex sm:flex-wrap text-center  gap-x-7">
-                <li>Contact</li>
-                <li>Terms & Condition</li>
-                <li>Cookies</li>
+                <li className="hover:text-blue-600 cursor-pointer hover:transition-colors hover:delay-150">
+                  Contact
+                </li>
+                <li className="hover:text-blue-600 cursor-pointer hover:transition-colors hover:delay-150">
+                  Terms & Condition
+                </li>
+                <li className="hover:text-blue-600 cursor-pointer hover:transition-colors hover:delay-150">
+                  Cookies
+                </li>
               </ul>
             </div>
           </div>

@@ -16,20 +16,24 @@ import { url } from "../Url/page";
 import Cookies from "js-cookie";
 import Image from "next/image";
 interface FormData {
-  form_id: String;
-  registration_num: String;
-  student_id: String;
-  department: String;
-  enroll_year: String;
-  expected_grad: String;
-  hall_id: String;
-  imageUrl: String;
-  active: Number;
+  form_id: string;
+  registration_num: string;
+  student_id: string;
+  department: string;
+  enroll_year: string;
+  expected_grad: string;
+  hall_id: string;
+  imageUrl: string;
+  active: number;
   name: string;
 }
+
 interface RoomData {
-  floor: String;
-  room: String;
+  floor: string;
+  room: string;
+  hall: {
+    hall_name: string;
+  };
 }
 const notifications = [
   {
@@ -56,6 +60,7 @@ export function Statuscard({ className, ...props }: CardProps) {
   const [roomData, setRoomData] = useState<RoomData | null>(null); // Initialize with null
   const [loading, setLoading] = useState(true); // Add loading state
   const id = Cookies.get("id");
+  const fallbackImage = "/images/logo2.png";
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`${url}/api/form/${id}`);
@@ -180,7 +185,7 @@ export function Statuscard({ className, ...props }: CardProps) {
         <div className="flex justify-center p-6 bg-white shadow-md rounded-lg max-w-md mx-auto">
           <div className="text-center">
             <Image
-              src={formData?.imageUrl}
+              src={formData?.imageUrl || fallbackImage}
               width={150}
               height={150}
               alt="Profile"
