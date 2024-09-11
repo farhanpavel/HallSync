@@ -5,7 +5,7 @@ export const hallGet = async (req, res) => {
   res.status(200).json(Data);
 };
 export const hallPost = async (req, res) => {
-  const { hall_name, capacity, room, bed, floor } = req.body;
+  const { hall_name, capacity, room, bed, floor, fee } = req.body;
 
   try {
     const Data = await prisma.hall.create({
@@ -15,6 +15,7 @@ export const hallPost = async (req, res) => {
         room,
         bed,
         floor,
+        fee,
       },
     });
 
@@ -53,7 +54,7 @@ export const hallDelete = async (req, res) => {
 };
 
 export const hallPut = async (req, res) => {
-  const { hall_name, bed, room, capacity, floor } = req.body;
+  const { hall_name, bed, room, capacity, floor, fee } = req.body;
   const Data = await prisma.hall.update({
     where: {
       hall_id: req.params.id,
@@ -64,6 +65,7 @@ export const hallPut = async (req, res) => {
       room,
       bed,
       floor,
+      fee,
     },
   });
   res.status(200).json(Data);

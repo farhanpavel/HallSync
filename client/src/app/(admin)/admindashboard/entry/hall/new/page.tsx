@@ -24,6 +24,7 @@ export default function Page() {
     room: "",
     bed: "",
     floor: "",
+    fee: "",
   });
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
@@ -127,6 +128,19 @@ export default function Page() {
                     type="number"
                     className="w-1/2"
                     name="bed"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs" htmlFor="name">
+                    Hall Fee
+                  </Label>
+                  <Input
+                    id="fee"
+                    type="number"
+                    className="w-1/2"
+                    name="fee"
                     onChange={handleChange}
                     required
                   />

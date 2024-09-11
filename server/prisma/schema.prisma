@@ -29,6 +29,7 @@ model Hall{
   floor String
   room String
   bed String
+  fee String
 
 }
 model Provost{
@@ -47,8 +48,8 @@ model Notice{
 }
 
 model Form {
-  name             String
-  form_id           String   @id @default(uuid())
+  name              String
+  form_id           String   @id @unique @default(uuid())
   registration_num  String
   student_id        String @unique
   department        String
@@ -58,11 +59,24 @@ model Form {
   imageUrl          String? 
   active            Int @default(0) 
   hall_active Int @default(0) 
+  payment Payment[]
 }
 model Room {
   student_id String @id
   hall_id String 
   floor String
   room String
+  
 }
 
+model Payment {
+  payment_id    String @id  @unique  @default(uuid())
+  student_id    String
+  hall_id       String   
+  status        Int      
+  month         String  
+  year          String   
+  payment_date  DateTime @default(now()) 
+  fee           String
+  form          Form     @relation(fields: [student_id], references: [student_id], onDelete: Cascade) 
+}

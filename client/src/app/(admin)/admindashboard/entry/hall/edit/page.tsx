@@ -31,8 +31,9 @@ export default function Page() {
     room: "",
     bed: "",
     floor: "",
+    fee: "",
   });
-  const { hall_name, capacity, room, bed, floor } = user;
+  const { hall_name, capacity, room, bed, floor, fee } = user;
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +77,7 @@ export default function Page() {
             room: json.room,
             bed: json.bed,
             floor: json.floor,
+            fee: json.fee,
           }));
         } else {
           console.error("Failed to fetch student data");
@@ -165,6 +167,20 @@ export default function Page() {
                     name="bed"
                     onChange={handleChange}
                     value={bed}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-xs" htmlFor="name">
+                    Hall Fee
+                  </Label>
+                  <Input
+                    id="fee"
+                    type="number"
+                    className="w-1/2"
+                    name="fee"
+                    onChange={handleChange}
+                    value={fee}
                     required
                   />
                 </div>

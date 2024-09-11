@@ -3,7 +3,11 @@ import cloudinary from "../cloudinaryConfig.js";
 import prisma from "../db.js";
 
 export const formGet = async (req, res) => {
-  const data = await prisma.form.findMany({});
+  const data = await prisma.form.findMany({
+    include: {
+      payment: true,
+    },
+  });
   res.status(200).json(data);
 };
 export const formGetById = async (req, res) => {
@@ -11,9 +15,25 @@ export const formGetById = async (req, res) => {
     where: {
       student_id: req.params.id,
     },
+    include: {
+      payment: true,
+    },
   });
   res.status(200).json(data);
 };
+export const formGetByStatus = async (req, res) => {
+  const data = await prisma.form.findFirst({
+    where: {
+      student_id: req.params.id,
+    },
+    include: {
+      payment: true,
+    },
+  });
+
+  res.status(200).json(data);
+};
+
 export const formGetByIdAnother = async (req, res) => {
   const formData = await prisma.form.findMany({
     where: {

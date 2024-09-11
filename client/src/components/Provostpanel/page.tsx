@@ -28,18 +28,18 @@ interface NoticeData {
 }
 export function Provostpanel() {
   const [noticeData, setnoticeData] = useState<NoticeData[]>([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`${url}/api/notice/admin`);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch(`${url}/api/notice/admin`);
 
-      const json = await response.json();
-      if (response.ok) {
-        console.log(json);
-        setnoticeData(json);
-      }
-    };
-    fetchData();
-  }, []);
+  //     const json = await response.json();
+  //     if (response.ok) {
+  //       console.log(json);
+  //       setnoticeData(json);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   const handleCookies = () => {
     Cookies.remove("id");

@@ -52,6 +52,16 @@ export default function Provostsidebar() {
             >
               Withdrawal Status
             </Link>
+            <Link
+              href="/provostdashboard/entry/payment"
+              className={`text-primary p-2 rounded-[5px] hover:transition-all hover:delay-200 ${
+                pathname.startsWith("/provostdashboard/entry/payment")
+                  ? "bg-blue-200 text-[#4a4a4a] font-medium"
+                  : "hover:bg-gray-200"
+              }`}
+            >
+              Payment Status
+            </Link>
           </nav>
         </div>
       </main>

@@ -7,6 +7,7 @@ import {
   formGetById,
   formGetByIdAnother,
   formGetByIdAnotherTwo,
+  formGetByStatus,
   formPut,
 } from "../controllers/formController.js";
 
@@ -18,6 +19,7 @@ formRouter.get("/studentdata/:hallid/:active", formGetByIdAnother);
 formRouter.get("/formdata/:hallid", formGetByIdAnotherTwo);
 formRouter.get("/activedata/data/:active", formGetByActive);
 formRouter.get("/:id", formGetById);
+formRouter.get("/status/data/:id", formGetByStatus);
 formRouter.put("/:id", formPut);
 formRouter.delete("/:id", formDelete);
 export default formRouter;
