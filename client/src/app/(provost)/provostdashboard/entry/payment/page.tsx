@@ -33,7 +33,9 @@ export default function Page() {
   const active = 1;
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${url}/api/room/roomdata/form/${hallId}`);
+      const response = await fetch(
+        `${url}/api/room/roomdata/form/all/${hallId}`
+      );
       const json = await response.json();
       if (response.ok) {
         setstudentData(json);
