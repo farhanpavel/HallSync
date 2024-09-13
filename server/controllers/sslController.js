@@ -65,7 +65,7 @@ export const successPayment = async (req, res) => {
 
     // Check if the payment was successfully updated
     if (updatedPayment) {
-      res.redirect("http://localhost:3000/studentdashboard/payment"); // Redirect user to the dashboard
+      res.redirect("https://hall-sync.vercel.app/studentdashboard/payment"); // Redirect user to the dashboard
     } else {
       res.status(404).json({ error: "Payment not found or update failed" });
     }
@@ -77,5 +77,5 @@ export const successPayment = async (req, res) => {
   }
 };
 export const failedPayment = async (req, res) => {
-  res.redirect("http://localhost:3000/studentdashboard/payment");
+  res.redirect("https://hall-sync.vercel.app/studentdashboard/payment");
 };
