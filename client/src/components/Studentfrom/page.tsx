@@ -33,7 +33,8 @@ export function Studentform({ className, ...props }: CardProps) {
     name: "",
   });
   const [image, setImage] = useState<File | null>(null);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
     if (name === "image") {
@@ -48,6 +49,7 @@ export function Studentform({ className, ...props }: CardProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     const formDataObj = new FormData();
     Object.keys(formData).forEach((key) => {
@@ -64,9 +66,7 @@ export function Studentform({ className, ...props }: CardProps) {
 
     if (response.ok) {
       setLoading(false);
-      setTimeout(() => {
-        router.back();
-      }, 3000);
+      router.back();
     } else {
       alert("Failed to submit form.");
     }
@@ -75,101 +75,111 @@ export function Studentform({ className, ...props }: CardProps) {
   return (
     <Card
       className={cn(
-        "w-[90%] container mx-auto border-[1px] border-gray-300 bg-[#FFFFFF] shadow-xl",
+        "w-full max-w-4xl mx-auto border border-gray-300 bg-white shadow-lg rounded-lg",
         className
       )}
       {...props}
     >
-      <CardHeader className="text-center">
-        <CardTitle className="text-xl">Hall Form</CardTitle>
-        <CardDescription className="text-xs">
-          A Form to assign your hall
+      <CardHeader className="text-center border-b border-gray-200 pb-4">
+        <CardTitle className="text-2xl font-semibold text-gray-800">
+          Hall Form
+        </CardTitle>
+        <CardDescription className="text-sm text-gray-600">
+          Please fill out the form to assign your hall.
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="p-4">
-          <div className="space-y-2">
-            <Label className="text-sm mx-2">Photo</Label>
-            <Input
-              id="picture"
-              type="file"
-              name="image"
-              className="bg-white w-1/6"
-              onChange={handleChange}
-            />
-          </div>
+        <CardContent className="p-6">
+          <div className="space-y-4">
+            <div className="flex flex-col">
+              <Label className="text-sm font-medium text-gray-700 mb-2">
+                Photo
+              </Label>
+              <Input
+                id="picture"
+                type="file"
+                name="image"
+                className="bg-gray-50 w-1/5 border border-gray-300 rounded-md"
+                onChange={handleChange}
+              />
+            </div>
 
-          <div className="mt-8">
-            <div className="grid lg:grid-cols-2 md:grid-cols-1 gap-4 mt-10">
-              <div className="flex items-center">
-                <Label className="text-sm mx-2">Full Name</Label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </Label>
                 <Input
                   type="text"
                   name="name"
-                  className="flex-1 bg-white"
+                  className="bg-gray-50 border border-gray-300 rounded-md"
                   onChange={handleChange}
                 />
               </div>
-              <div className="flex items-center">
-                <Label className="text-sm mx-2">Registration Number</Label>
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-700 mb-2">
+                  Registration Number
+                </Label>
                 <Input
                   type="number"
                   name="registration_num"
-                  className="flex-1 bg-white"
+                  className="bg-gray-50 border border-gray-300 rounded-md"
                   onChange={handleChange}
                 />
               </div>
             </div>
-            <div className="grid lg:grid-cols-3 md:grid-cols-1 mt-4 space-y-4 lg:space-y-0">
-              <div className="flex items-center">
-                <Label className="text-sm mx-2">Enrolled Department</Label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-700 mb-2">
+                  Enrolled Department
+                </Label>
                 <Input
                   type="text"
                   name="department"
-                  className="flex-1 bg-white"
+                  className="bg-gray-50 border border-gray-300 rounded-md"
                   onChange={handleChange}
                 />
               </div>
-              <div className="flex items-center">
-                <Label className="text-sm mx-2">Enrolled Year</Label>
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-700 mb-2">
+                  Enrolled Year
+                </Label>
                 <Input
                   type="date"
                   name="enroll_year"
-                  className="flex-1 bg-white"
+                  className="bg-gray-50 border border-gray-300 rounded-md"
                   onChange={handleChange}
                 />
               </div>
-              <div className="flex items-center">
-                <Label className="text-sm mx-2">Expected Graduation</Label>
+              <div className="flex flex-col">
+                <Label className="text-sm font-medium text-gray-700 mb-2">
+                  Expected Graduation
+                </Label>
                 <Input
                   type="date"
                   name="expected_grad"
-                  className="flex-1 bg-white"
+                  className="bg-gray-50 border border-gray-300 rounded-md"
                   onChange={handleChange}
                 />
               </div>
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-end">
-          <CardFooter className="flex justify-end mt-7">
+        <CardFooter className="flex justify-end p-6 border-t border-gray-200">
+          <Button
+            type="submit"
+            className="bg-blue-600 text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded-md px-4 py-2"
+            disabled={isLoading}
+          >
             {isLoading ? (
-              <Button
-                type="submit"
-                className=" bg-blue-500 text-xs hover:bg-blue-400 hover:transition-all hover:delay-100"
-              >
-                Submit
-              </Button>
+              <div className="flex items-center">
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Submitting...
+              </div>
             ) : (
-              <Button
-                type="submit"
-                disabled
-                className=" bg-blue-500 hover:bg-blue-400 hover:transition-all hover:delay-100"
-              >
-                <Loader2 className="h-4 w-4 animate-spin" />
-              </Button>
+              "Submit"
             )}
-          </CardFooter>
+          </Button>
         </CardFooter>
       </form>
     </Card>

@@ -36,7 +36,7 @@ export const userPost = async (req, res) => {
       });
 
       res.status(200).json(Data);
-    } else {
+    } else if (role === "provost") {
       const Data = await prisma.user.create({
         data: {
           email,
@@ -49,6 +49,17 @@ export const userPost = async (req, res) => {
               hall_id: "",
             },
           },
+        },
+      });
+
+      res.status(200).json(Data);
+    } else {
+      const Data = await prisma.user.create({
+        data: {
+          email,
+          role,
+          name,
+          password: hashedPassword,
         },
       });
 

@@ -2,17 +2,15 @@ import prisma from "../db.js";
 import bcrypt from "bcrypt";
 
 export const noticeGet = async (req, res) => {
-  if (req.params.role === "provost") {
-    try {
-      const Data = await prisma.notice.findMany({
-        where: {
-          id: req.params.id,
-        },
-      });
-      res.status(200).json(Data);
-    } catch (err) {
-      res.status(500).json("Erorr On fetching Notice");
-    }
+  try {
+    const Data = await prisma.notice.findMany({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).json(Data);
+  } catch (err) {
+    res.status(500).json("Erorr On fetching Notice");
   }
 };
 export const noticeGetByRole = async (req, res) => {

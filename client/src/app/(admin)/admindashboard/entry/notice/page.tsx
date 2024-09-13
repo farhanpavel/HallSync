@@ -24,13 +24,15 @@ import Link from "next/link";
 import { User, columns } from "./_datatable/action";
 import { useAppContext } from "@/components/Context/admincontext";
 import { Input } from "@/components/ui/input";
-
+import Cookies from "js-cookie";
 export default function Page() {
   const [sorting, setSorting] = useState<SortingState>([]);
   const { noticeData, setNoticeData } = useAppContext();
+  const role = "admin";
+  const id = Cookies.get("id");
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${url}/api/notice`);
+      const response = await fetch(`${url}/api/notice/data/${id}/${role}`);
       const json = await response.json();
       if (response.ok) {
         setNoticeData(json);

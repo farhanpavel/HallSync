@@ -13,6 +13,7 @@ export function Adminpanel() {
   const handleCookies = () => {
     Cookies.remove("id");
     Cookies.remove("hallId");
+    Cookies.remove("role");
   };
   return (
     <div className="flex  w-full flex-col ">

@@ -28,22 +28,25 @@ interface NoticeData {
 }
 export function Provostpanel() {
   const [noticeData, setnoticeData] = useState<NoticeData[]>([]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await fetch(`${url}/api/notice/admin`);
+  const id = "d1bad24a-cc34-4dca-a561-bfdf56cd5f93";
+  const role = "admin";
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`${url}/api/notice/${id}/${role}`);
 
-  //     const json = await response.json();
-  //     if (response.ok) {
-  //       console.log(json);
-  //       setnoticeData(json);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+      const json = await response.json();
+      if (response.ok) {
+        console.log(json);
+        setnoticeData(json);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleCookies = () => {
     Cookies.remove("id");
     Cookies.remove("hallId");
+    Cookies.remove("role");
   };
   const pathname = usePathname();
   return (

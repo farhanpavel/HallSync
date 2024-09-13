@@ -42,18 +42,14 @@ export const roomGetByStudentId = async (req, res) => {
 
 export const roomGetById = async (req, res) => {
   try {
-    // Fetch all room data based on hall_id and room number
+    // Fetch all room data based on hall_id, room number, and floor
     const roomData = await prisma.room.findMany({
       where: {
         hall_id: req.params.id, // hall_id from params
-        room: req.params.room, // room number from params
+        room: req.params.room,
+        floor: req.params.floor, // floor from params
       },
     });
-
-    // // If no room data is found, respond with an error
-    // if (!roomData || roomData.length === 0) {
-    //   return res.status(404).json({ message: "Room not found" });
-    // }
 
     // For each room entry, fetch the corresponding form data using the student_id
     const roomWithFormData = await Promise.all(

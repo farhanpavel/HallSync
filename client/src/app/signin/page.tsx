@@ -5,11 +5,30 @@ import Link from "next/link";
 import { url } from "@/components/Url/page";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import Loader from "@/components/Loader/page";
 export default function Signin() {
   const [user, setUser] = useState({ email: "", password: "" });
+  const [isLoading, setLoading] = useState(true);
   const [isvalid, setvalid] = useState(false);
   const { email, password } = user;
+  const [isLogged, setLogged] = useState(false);
   const router = useRouter();
+  useEffect(() => {
+    const role = Cookies.get("role");
+    if (role === "student") {
+      router.push("/studentdashboard/overview");
+    } else if (role === "provost") {
+      router.push("/provostdashboard/overview");
+    } else if (role === "admin") {
+      router.push("/admindashboard/overview");
+    } else {
+      setLoading(false);
+    }
+  });
+  if (isLoading) {
+    return <div></div>;
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser((x) => ({
       ...x,
@@ -42,18 +61,25 @@ export default function Signin() {
       }
       setvalid(false);
       const data = await response.json();
-      alert("Login successful!");
-      if (data.role === "student") {
-        Cookies.set("id", data.id);
-        router.push("/studentdashboard/overview");
-      } else if (data.role === "admin") {
-        Cookies.set("id", data.id);
-        router.push("/admindashboard/overview");
-      } else {
-        Cookies.set("id", data.id);
-        Cookies.set("hallId", data.hall_id);
-        router.push("/provostdashboard/overview");
-      }
+      setLogged(true);
+      setTimeout(() => {
+        if (data.role === "student") {
+          Cookies.set("id", data.id);
+          Cookies.set("role", data.role);
+          router.push("/studentdashboard/overview");
+        } else if (data.role === "admin") {
+          Cookies.set("id", data.id);
+          Cookies.set("role", data.role);
+
+          router.push("/admindashboard/overview");
+        } else {
+          Cookies.set("id", data.id);
+          Cookies.set("hallId", data.hall_id);
+          Cookies.set("role", data.role);
+
+          router.push("/provostdashboard/overview");
+        }
+      }, 2000);
     } catch (err) {
       console.log("error", err);
     }
@@ -109,9 +135,9 @@ export default function Signin() {
                 <div className="space-x-3">
                   <button
                     type="submit"
-                    className="px-6 py-2 bg-blue-500 w-full text-white"
+                    className="px-6 py-2 bg-blue-500 w-1/2 text-white  rounded-full mt-2"
                   >
-                    Login
+                    {isLogged ? <Loader /> : "Login"}
                   </button>
                 </div>
               </form>

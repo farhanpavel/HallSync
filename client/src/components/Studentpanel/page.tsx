@@ -44,6 +44,7 @@ export function Studentpanel() {
   const handleCookies = () => {
     Cookies.remove("id");
     Cookies.remove("hallId");
+    Cookies.remove("role");
   };
 
   const pathname = usePathname();

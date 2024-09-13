@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { url } from "@/components/Url/page";
+import Loader from "@/components/Loader/page";
 export default function Signup() {
   const [user, setUser] = useState({
     name: "",
@@ -12,8 +13,25 @@ export default function Signup() {
     confirmpassword: "",
     role: "student",
   });
+  const [isLogged, setLogged] = useState(false);
   const router = useRouter();
   const { name, email, password, confirmpassword, role } = user;
+  const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    const role = Cookies.get("role");
+    if (role === "student") {
+      router.push("/studentdashboard/overview");
+    } else if (role === "provost") {
+      router.push("/provostdashboard/overview");
+    } else if (role === "admin") {
+      router.push("/admindashboard/overview");
+    } else {
+      setLoading(false);
+    }
+  });
+  if (isLoading) {
+    return <div></div>;
+  }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -37,8 +55,10 @@ export default function Signup() {
           alert("Server Error");
           throw new Error("Failed to submit data");
         } else {
-          alert("Success");
-          router.push("/signin");
+          setLogged(true);
+          setTimeout(() => {
+            router.push("/signin");
+          }, 2000);
         }
       } catch (err) {
         console.log("error", err);
@@ -98,9 +118,9 @@ export default function Signup() {
                 <div className="space-x-3">
                   <button
                     type="submit"
-                    className="px-6 py-2 bg-blue-500 w-full text-white hover:bg-green-500 hover:transition-all hover:delay-200"
+                    className="px-6 py-2 bg-blue-500 w-1/2 text-white rounded-full mt-2"
                   >
-                    Register
+                    {isLogged ? <Loader /> : "Register"}
                   </button>
                 </div>
               </form>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -39,36 +39,43 @@ export function Slider() {
   const [isRoomEnabled, setIsRoomEnabled] = useState<boolean>(false);
   const hallId = Cookies.get("hallId");
   const [roomName, setRoom] = useState("");
-  const handleFetchRoomData = async (room: string) => {
+  const [message, setMessage] = useState<string>("No room found.");
+
+  const handleFetchRoomData = async (floor: string, room: string) => {
     setRoom(room);
     try {
-      const response = await fetch(`${url}/api/room/${hallId}/${room}`);
+      const response = await fetch(
+        `${url}/api/room/${hallId}/${room}/${floor}`
+      );
       const json = await response.json();
       if (response.ok) {
         if (room.startsWith("0")) {
-          // Room number starts with "0", check if there are students
           if (json.length === 0) {
             setRoomData([]);
+            setMessage("No room found.");
           } else {
             setRoomData(json);
+            setMessage("");
           }
         } else {
-          // Room number does not start with "0"
           if (json.length === 0) {
             alert("Wrong Room Number");
+            setMessage("No room found.");
           } else {
             setRoomData(json);
+            setMessage("");
           }
         }
       }
     } catch (error) {
       console.error("Error fetching room data", error);
+      setMessage("Error fetching room data.");
     }
   };
 
   const handleSearch = () => {
     if (roomNumber.trim()) {
-      handleFetchRoomData(roomNumber);
+      handleFetchRoomData(floorNumber, roomNumber);
     }
   };
 
@@ -79,8 +86,9 @@ export function Slider() {
       setIsRoomEnabled(true);
     } else {
       setIsRoomEnabled(false);
-      setRoomNumber(""); // Clear room number if floor is empty
-      setRoomData([]); // Clear room data if no floor number
+      setRoomNumber("");
+      setRoomData([]);
+      setMessage("No room found.");
     }
   };
 
@@ -88,55 +96,63 @@ export function Slider() {
     setRoomNumber(e.target.value);
   };
 
+  useEffect(() => {
+    // Initialize message when component mounts
+    setMessage("No room found.");
+  }, []);
+
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 rounded-lg">
+    <div className="w-full max-w-4xl mx-auto p-6 rounded-lg bg-gray-100 shadow-md">
       {/* Search Input */}
-      <div className="flex flex-col sm:flex-row justify-between mb-5 gap-4">
-        <div className="flex items-center gap-2">
-          <Input
-            id="floorInput"
-            type="text"
-            className="border border-gray-300 p-3 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter Floor number"
-            value={floorNumber}
-            onChange={handleFloorChange}
-          />
-          <Input
-            id="roomInput"
-            type="text"
-            className="border border-gray-300 p-3 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter Room number"
-            value={roomNumber}
-            onChange={handleRoomChange}
-            disabled={!isRoomEnabled}
-          />
-          <button
-            onClick={handleSearch}
-            className={`ml-2 px-4 py-2 rounded-sm text-xs text-white  shadow-md transition-transform duration-200 ${
-              isRoomEnabled && roomNumber.trim()
-                ? "bg-red-600 hover:bg-red-700"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
-            disabled={!isRoomEnabled || !roomNumber.trim()}
-          >
-            GO
-          </button>
-        </div>
-        <div className="flex items-center">
-          <button
-            onClick={() =>
-              router.push("/provostdashboard/entry/assignroom/new")
-            }
-            className="bg-green-500 text-xs text-white px-4 py-2 rounded-sm  shadow-md hover:bg-green-600 transition-colors duration-200"
-          >
-            Assign Room
-          </button>
+      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h2 className="text-xl font-semibold mb-4">Search Rooms</h2>
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <Input
+              id="floorInput"
+              type="text"
+              className="border border-gray-300 p-3 rounded-lg bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Floor Number"
+              value={floorNumber}
+              onChange={handleFloorChange}
+            />
+            <Input
+              id="roomInput"
+              type="text"
+              className="border border-gray-300 p-3 rounded-lg bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Room Number"
+              value={roomNumber}
+              onChange={handleRoomChange}
+              disabled={!isRoomEnabled}
+            />
+            <button
+              onClick={handleSearch}
+              className={`px-5 py-2 text-xs  text-white shadow-md transition-transform duration-200 ${
+                isRoomEnabled && roomNumber.trim()
+                  ? "bg-blue-600 hover:bg-blue-700"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
+              disabled={!isRoomEnabled || !roomNumber.trim()}
+            >
+              Search
+            </button>
+          </div>
+          <div className="flex items-center">
+            <button
+              onClick={() =>
+                router.push("/provostdashboard/entry/assignroom/new")
+              }
+              className="bg-green-500 text-white px-5 py-2 text-xs  shadow-md hover:bg-green-600 transition-colors duration-200"
+            >
+              Assign Room
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Carousel */}
-      {roomData.length > 0 && (
-        <Carousel className="w-full ">
+      {roomData.length > 0 ? (
+        <Carousel className="w-full">
           <CarouselContent>
             {roomData.map((data, index) => (
               <CarouselItem key={index} className="transform block p-4">
@@ -194,6 +210,10 @@ export function Slider() {
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
+      ) : (
+        <div className="text-center p-6">
+          <p className="text-lg font-semibold text-gray-700">{message}</p>
+        </div>
       )}
     </div>
   );

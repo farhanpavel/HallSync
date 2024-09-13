@@ -3,6 +3,9 @@
  * @see https://v0.dev/t/lJwnQlHSEBA
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
+"use client";
+import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -13,6 +16,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import Image from "next/image";
 export default function Header() {
+  const [role, setRole] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    setRole(Cookies.get("role"));
+  }, []);
   return (
     <header className="flex h-20 w-full shrink-0 justify-between items-center px-4 md:px-6 font-rubik">
       <Sheet>
@@ -111,7 +119,7 @@ export default function Header() {
           href="/signin"
           className="bg-blue-600 px-6 py-3 text-white rounded-full font-semibold 2xl:px-8 2xl:py-4"
         >
-          Login
+          {role ? "Dashboard" : "Login"}
         </Link>
       </div>
     </header>

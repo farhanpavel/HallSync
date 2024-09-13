@@ -14,6 +14,15 @@ export const paymentGetById = async (req, res) => {
   });
   res.status(200).json(Data);
 };
+export const paymentGetByStudentId = async (req, res) => {
+  const Data = await prisma.payment.findMany({
+    where: {
+      student_id: req.params.id,
+      status: parseInt(req.params.status),
+    },
+  });
+  res.status(200).json(Data.length);
+};
 
 export const paymentPost = async (req, res) => {
   const { student_id, hall_id, status, month, year } = req.body;
