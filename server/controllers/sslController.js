@@ -1,5 +1,6 @@
 import SSLCommerzPayment from "sslcommerz-lts";
 import prisma from "../db.js";
+
 import { v4 as uuidv4 } from "uuid";
 // Initialize the SSLCommerzPayment
 const store_id = process.env.STORE_ID;
@@ -17,9 +18,9 @@ export const initiatePayment = async (req, res) => {
     total_amount: paymentData.fee,
     currency: "BDT",
     tran_id: paymentId, // use unique tran_id for each api call
-    success_url: `http://localhost:4000/api/ssl/success/${paymentId}`,
+    success_url: `https://hallsync.onrender.com/api/ssl/success/${paymentId}`,
 
-    fail_url: "http://localhost:4000/api/ssl/fail",
+    fail_url: "https://hallsync.onrender.com/api/ssl/fail",
     cancel_url: "http://localhost:3030/cancel",
     ipn_url: "http://localhost:3030/ipn",
     shipping_method: "Courier",
