@@ -1,1 +1,1 @@
-export const url = "https://hallsync.onrender.com/api/user";
+export const url = "https://hallsync.onrender.com";
