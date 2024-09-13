@@ -28,7 +28,7 @@ interface NoticeData {
 }
 export function Provostpanel() {
   const [noticeData, setnoticeData] = useState<NoticeData[]>([]);
-  const id = "a5bd8ff7-f35c-45f5-8b48-5cd1a18225a7";
+  const id = "08d2a62c-375e-4b30-ab8c-628abab980f5";
   const role = "admin";
   useEffect(() => {
     const fetchData = async () => {
